@@ -1,14 +1,105 @@
 import React from "react";
-import reactTestRenderer from "react-test-renderer";
+import TestRenderer from "react-test-renderer";
 import RoverSelector from "./RoverSelector";
 import { rovers } from "../pages/ConnectedRoverSearch";
 
 describe("RoverSelector", () => {
   describe("rendering", () => {
+    it("Shouldn't change", () => {
+      const all = { spirit: true, opportunity: true, curiosity: true };
+
+      const tree = TestRenderer.create(
+        <RoverSelector
+          roversActive={all}
+          roverSelection={all}
+          rovers={rovers}
+          onRoverSelection={() => {}}
+        />
+      ).toJSON();
+
+      expect(tree).toMatchInlineSnapshot(`
+        <div
+          className="row"
+          style={
+            Object {
+              "textAlign": "center",
+            }
+          }
+        >
+          <div
+            className="col-4 "
+            data-testid="rover-div-spirit"
+          >
+            <strong>
+              Spirit
+            </strong>
+            <br />
+            <small>
+              2004-01-05
+               - 
+              2010-03-21
+            </small>
+            <p>
+              <input
+                checked={true}
+                data-testid="rover-selected"
+                onChange={[Function]}
+                type="checkbox"
+              />
+            </p>
+          </div>
+          <div
+            className="col-4 "
+            data-testid="rover-div-opportunity"
+          >
+            <strong>
+              Opportunity
+            </strong>
+            <br />
+            <small>
+              2004-01-26
+               - 
+              2018-06-11
+            </small>
+            <p>
+              <input
+                checked={true}
+                data-testid="rover-selected"
+                onChange={[Function]}
+                type="checkbox"
+              />
+            </p>
+          </div>
+          <div
+            className="col-4 "
+            data-testid="rover-div-curiosity"
+          >
+            <strong>
+              Curiosity
+            </strong>
+            <br />
+            <small>
+              2012-08-07
+               - 
+              2019-09-28
+            </small>
+            <p>
+              <input
+                checked={true}
+                data-testid="rover-selected"
+                onChange={[Function]}
+                type="checkbox"
+              />
+            </p>
+          </div>
+        </div>
+      `);
+    });
+
     describe("All rovers are selected", () => {
       it("Should select all rovers", () => {
         const all = { spirit: true, opportunity: true, curiosity: true };
-        let tr = reactTestRenderer.create(
+        let tr = TestRenderer.create(
           <RoverSelector
             roversActive={all}
             roverSelection={all}
@@ -28,7 +119,7 @@ describe("RoverSelector", () => {
     describe("None of the rovers is selected", () => {
       it("Should select no rovers", () => {
         const none = { spirit: false, opportunity: false, curiosity: false };
-        let tr = reactTestRenderer.create(
+        let tr = TestRenderer.create(
           <RoverSelector
             roversActive={none}
             roverSelection={none}
@@ -51,7 +142,7 @@ describe("RoverSelector", () => {
       it("Should not have RoverSelector-inactive", () => {
         const all = { spirit: true, opportunity: true, curiosity: true };
         const classRegExp = /.*RoverSelector-inactive/;
-        let tr = reactTestRenderer.create(
+        let tr = TestRenderer.create(
           <RoverSelector
             roversActive={all}
             roverSelection={all}
@@ -74,7 +165,7 @@ describe("RoverSelector", () => {
       it("Should have RoverSelector-inactive", () => {
         const none = { spirit: false, opportunity: false, curiosity: false };
         const classRegExp = /.*RoverSelector-inactive/;
-        let tr = reactTestRenderer.create(
+        let tr = TestRenderer.create(
           <RoverSelector
             roversActive={none}
             roverSelection={none}
@@ -101,7 +192,7 @@ describe("RoverSelector", () => {
           curiosity: true
         };
         const classRegExp = /.*RoverSelector-inactive/;
-        let tr = reactTestRenderer.create(
+        let tr = TestRenderer.create(
           <RoverSelector
             roversActive={activation}
             roverSelection={activation}

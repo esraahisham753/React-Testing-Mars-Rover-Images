@@ -1,6 +1,6 @@
 import { render, fireEvent, wait } from "@testing-library/react";
 import App from "./App";
-import { dateToSol, solToDate } from "./services/sols";
+import { dateToSol } from "./services/sols";
 import React from "react";
 
 describe("App", () => {
@@ -34,6 +34,23 @@ describe("App", () => {
 
         const images = renderedElement.getAllByTestId("rover-image");
         expect(images.length).toBe(8);
+      });
+
+      fireEvent.click(checkboxes[1]);
+      await wait(() => {
+        const images = renderedElement.getAllByTestId("rover-image");
+        expect(images.length).toBe(2);
+      });
+
+      const cameraSelect = renderedElement.queryByTestId("camera-select");
+      fireEvent.change(cameraSelect, {
+        target: {
+          value: "NAVCAM"
+        }
+      });
+      await wait(() => {
+        const images = renderedElement.getAllByTestId("rover-image");
+        expect(images.length).toBe(27);
       });
     });
   });
