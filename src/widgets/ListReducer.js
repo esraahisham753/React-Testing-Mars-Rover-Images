@@ -17,7 +17,7 @@ export const listReducer = (state, action) => {
 
     case "add":
       return {
-        ...state,
+        newItem: "",
         items: [...state.items, state.newItem]
       };
 
